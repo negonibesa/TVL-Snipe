@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVH Снайпер — от центра к центру</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0a0f1a 0%, #070b14 100%);
+            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 720px;
+            width: 100%;
+            background: rgba(18, 25, 45, 0.88);
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 28px 32px 36px;
+            border: 1px solid rgba(90, 120, 200, 0.3);
+            box-shadow: 0 20px 35px -8px black;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(130deg, #E0E7FF, #A5B9E8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0 0 4px 0;
+        }
+
+        .sub {
+            text-align: center;
+            color: #8C9BC5;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #28325A;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 24px auto;
+            padding-bottom: 8px;
+        }
+
+        .grid-2 {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .block {
+            flex: 1;
+            min-width: 200px;
+            background: #0E1428;
+            border-radius: 32px;
+            padding: 16px 20px;
+            border: 1px solid #293359;
+        }
+
+        .block-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            color: #A1B0DC;
+            margin-bottom: 12px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .input-row label {
+            width: 50px;
+            font-weight: 600;
+            color: #B7C4F0;
+        }
+
+        .input-row input {
+            flex: 1;
+            background: #0C1122;
+            border: 1px solid #2F3B64;
+            padding: 10px 14px;
+            border-radius: 28px;
+            color: white;
+            font-weight: 500;
+            outline: none;
+        }
+
+        .input-row input:focus {
+            border-color: #6F8BEF;
+        }
+
+        .param-line {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .param-line .field {
+            flex: 1;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.7rem;
+            color: #8F9ECA;
+            margin-bottom: 4px;
+        }
+
+        .field input, .field select {
+            width: 100%;
+            background: #0B1022;
+            border: 1px solid #2E3A60;
+            padding: 10px 12px;
+            border-radius: 24px;
+            color: white;
+        }
+
+        .result-card {
+            background: #080E1C;
+            border-radius: 32px;
+            padding: 20px 24px;
+            margin: 20px 0 16px;
+            border: 1px solid #2C3760;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 12px 0;
+            border-bottom: 1px solid #1A2342;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 500;
+            color: #9DAAD5;
+        }
+
+        .result-value {
+            font-weight: 800;
+            font-size: 1.2rem;
+            font-family: monospace;
+            color: #F0F4FF;
+        }
+
+        .profit-num {
+            color: #A2F2C5;
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(95deg, #25396F, #182047);
+            border: none;
+            font-weight: bold;
+            padding: 14px;
+            border-radius: 60px;
+            color: white;
+            font-size: 1rem;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #5171BD;
+        }
+
+        button:hover {
+            background: linear-gradient(95deg, #314F8C, #1F2A59);
+        }
+
+        .buffer-note {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #737EA5;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>⚡ TVH СНАЙПЕР ⚡</h1>
+    <div style="text-align: center;"><span class="sub">от центра ДОДЖИ до центра ДОДЖИ</span></div>
+
+    <div class="grid-2">
+        <!-- Блок входа: текущий доджи (TVH) -->
+        <div class="block">
+            <div class="block-title">📌 ТЕКУЩИЙ ДОДЖИ (вход)</div>
+            <div class="input-row">
+                <label>HIGH</label>
+                <input type="number" id="currentHigh" step="any" value="0.10909" placeholder="0.10909">
+            </div>
+            <div class="input-row">
+                <label>LOW</label>
+                <input type="number" id="currentLow" step="any" value="0.10775" placeholder="0.10775">
+            </div>
+            <div class="input-row">
+                <label>🎯 TVH</label>
+                <input type="text" id="currentTvh" readonly style="background:#121B38; color:#C6DEFF;" value="0.10842">
+            </div>
+        </div>
+
+        <!-- Блок выхода: целевой доджи (TVH exit) -->
+        <div class="block">
+            <div class="block-title">🎯 СЛЕДУЮЩИЙ ДОДЖИ (выход)</div>
+            <div class="input-row">
+                <label>HIGH</label>
+                <input type="number" id="exitHigh" step="any" value="0.11174" placeholder="0.11174">
+            </div>
+            <div class="input-row">
+                <label>LOW</label>
+                <input type="number" id="exitLow" step="any" value="0.11073" placeholder="0.11073">
+            </div>
+            <div class="input-row">
+                <label>🏁 TVH (TP)</label>
+                <input type="text" id="exitTvh" readonly style="background:#121B38; color:#D3E2FF;" value="0.11124">
+            </div>
+        </div>
+    </div>
+
+    <div class="param-line">
+        <div class="field">
+            <label>🛡️ Стоп-лосс (SL)</label>
+            <input type="number" id="stopLoss" step="any" placeholder="Авто с буфером" value="0.10506">
+        </div>
+        <div class="field">
+            <label>🧱 Буфер SL (от TVH)</label>
+            <select id="bufferSelect">
+                <option value="2.0">2.0% (стандарт)</option>
+                <option value="2.2">2.2%</option>
+                <option value="2.5" selected>2.5% (жёсткий)</option>
+                <option value="3.0">3.0% (безопасный)</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>📊 Тип сделки</label>
+            <select id="tradeType">
+                <option value="long">Лонг (покупка)</option>
+                <option value="short">Шорт (продажа)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="param-line">
+        <div class="field">
+            <label>💰 Депозит ($)</label>
+            <input type="number" id="deposit" value="1000" step="100">
+        </div>
+        <div class="field">
+            <label>⚠️ Риск % на сделку</label>
+            <input type="number" id="riskPercent" step="0.25" value="1.0">
+        </div>
+        <div class="field">
+            <label>⚙️ Плечо (x)</label>
+            <input type="number" id="leverage" step="0.5" value="2.0">
+        </div>
+    </div>
+
+    <button id="calcBtn">🧮 РАССЧИТАТЬ ПОЗИЦИЮ</button>
+
+    <div class="result-card" id="resultArea">
+        <div class="result-row">
+            <span>🎯 TVH вход</span>
+            <span class="result-value" id="entryPriceDisplay">0.00000</span>
+        </div>
+        <div class="result-row">
+            <span>🛡️ Стоп-лосс</span>
+            <span class="result-value" id="stopDisplay">0.00000</span>
+        </div>
+        <div class="result-row">
+            <span>🏁 TP (центр следующего доджи)</span>
+            <span class="result-value profit-num" id="tpDisplay">0.00000</span>
+        </div>
+        <div class="result-row">
+            <span>💸 Риск в $</span>
+            <span class="result-value" id="riskDollar">0.00 $</span>
+        </div>
+        <div class="result-row">
+            <span>📦 Размер позиции (юниты)</span>
+            <span class="result-value" id="positionUnits">0</span>
+        </div>
+        <div class="result-row">
+            <span>💎 Маржа (залог)</span>
+            <span class="result-value" id="marginValue">0.00 $</span>
+        </div>
+        <div class="result-row">
+            <span>📈 Потенциальный профит</span>
+            <span class="result-value profit-num" id="profitAmount">0.00 $</span>
+        </div>
+    </div>
+    <div class="buffer-note">
+        ✅ Буфер стоп-лосса рассчитывается относительно TVH (вход) и направления сделки.<br>
+        🔁 R/R динамический — система сама считает расстояние до центра следующего доджи.
+    </div>
+</div>
+
+<script>
+    (function(){
+        // DOM
+        const currentHigh = document.getElementById('currentHigh');
+        const currentLow = document.getElementById('currentLow');
+        const currentTvh = document.getElementById('currentTvh');
+        const exitHigh = document.getElementById('exitHigh');
+        const exitLow = document.getElementById('exitLow');
+        const exitTvh = document.getElementById('exitTvh');
+        const stopLossInput = document.getElementById('stopLoss');
+        const bufferSelect = document.getElementById('bufferSelect');
+        const tradeType = document.getElementById('tradeType');
+        const depositInput = document.getElementById('deposit');
+        const riskPercentInput = document.getElementById('riskPercent');
+        const leverageInput = document.getElementById('leverage');
+        
+        const entryPriceDisplay = document.getElementById('entryPriceDisplay');
+        const stopDisplay = document.getElementById('stopDisplay');
+        const tpDisplay = document.getElementById('tpDisplay');
+        const riskDollarSpan = document.getElementById('riskDollar');
+        const positionUnitsSpan = document.getElementById('positionUnits');
+        const marginValueSpan = document.getElementById('marginValue');
+        const profitAmountSpan = document.getElementById('profitAmount');
+
+        function computeTVH(high, low) {
+            return (high + low) / 2;
+        }
+
+        function updateTVHs() {
+            let highCurr = parseFloat(currentHigh.value);
+            let lowCurr = parseFloat(currentLow.value);
+            if (!isNaN(highCurr) && !isNaN(lowCurr) && highCurr > 0 && lowCurr > 0) {
+                let tvhEntry = computeTVH(highCurr, lowCurr);
+                currentTvh.value = tvhEntry.toFixed(6);
+            } else {
+                currentTvh.value = '—';
+            }
+
+            let highExit = parseFloat(exitHigh.value);
+            let lowExit = parseFloat(exitLow.value);
+            if (!isNaN(highExit) && !isNaN(lowExit) && highExit > 0 && lowExit > 0) {
+                let tvhExit = computeTVH(highExit, lowExit);
+                exitTvh.value = tvhExit.toFixed(6);
+            } else {
+                exitTvh.value = '—';
+            }
+        }
+
+        function getStopWithBuffer(tvh, bufferPercent, type) {
+            if (isNaN(tvh) || tvh === null) return null;
+            let buffer = bufferPercent / 100;
+            if (type === 'long') {
+                return tvh - (tvh * buffer);
+            } else {
+                return tvh + (tvh * buffer);
+            }
+        }
+
+        function computeAll() {
+            let highCurr = parseFloat(currentHigh.value);
+            let lowCurr = parseFloat(currentLow.value);
+            if (isNaN(highCurr) || isNaN(lowCurr) || highCurr <= 0 || lowCurr <= 0) return;
+            let entryTVH = computeTVH(highCurr, lowCurr);
+            entryPriceDisplay.innerText = entryTVH.toFixed(6);
+
+            let highExit = parseFloat(exitHigh.value);
+            let lowExit = parseFloat(exitLow.value);
+            let exitTVH = (!isNaN(highExit) && !isNaN(lowExit) && highExit > 0 && lowExit > 0) ? computeTVH(highExit, lowExit) : null;
+            
+            let type = tradeType.value; // long / short
+            let bufferPercent = parseFloat(bufferSelect.value);
+            let manualStop = parseFloat(stopLossInput.value);
+            let finalStop;
+            if (!isNaN(manualStop) && manualStop > 0) {
+                finalStop = manualStop;
+            } else {
+                let buffered = getStopWithBuffer(entryTVH, bufferPercent, type);
+                if (buffered !== null) finalStop = buffered;
+                else return;
+            }
+            stopDisplay.innerText = finalStop.toFixed(6);
+            
+            let targetPrice = (exitTVH !== null && !isNaN(exitTVH) && exitTVH > 0) ? exitTVH : null;
+            if (targetPrice !== null) {
+                tpDisplay.innerText = targetPrice.toFixed(6);
+            } else {
+                tpDisplay.innerText = '—';
+            }
+            
+            let deposit = parseFloat(depositInput.value);
+            let riskPercent = parseFloat(riskPercentInput.value);
+            let leverage = parseFloat(leverageInput.value);
+            if (isNaN(deposit) || isNaN(riskPercent) || deposit <= 0) return;
+            let riskDollars = deposit * (riskPercent / 100);
+            let stopDistance = Math.abs(entryTVH - finalStop);
+            if (stopDistance === 0) return;
+            
+            let units = riskDollars / stopDistance;
+            let positionValue = units * entryTVH;
+            let margin = positionValue / (leverage >= 1 ? leverage : 1);
+            
+            let profitAmount = 0;
+            if (targetPrice !== null) {
+                let profitDistance = Math.abs(targetPrice - entryTVH);
+                profitAmount = units * profitDistance;
+            } else {
+                profitAmount = riskDollars * 3;
+            }
+            
+            riskDollarSpan.innerText = riskDollars.toFixed(2) + ' $';
+            positionUnitsSpan.innerText = units.toFixed(2);
+            marginValueSpan.innerText = margin.toFixed(2) + ' $';
+            profitAmountSpan.innerText = profitAmount.toFixed(2) + ' $';
+        }
+
+        function bindEvents() {
+            currentHigh.addEventListener('input', () => { updateTVHs(); computeAll(); });
+            currentLow.addEventListener('input', () => { updateTVHs(); computeAll(); });
+            exitHigh.addEventListener('input', () => { updateTVHs(); computeAll(); });
+            exitLow.addEventListener('input', () => { updateTVHs(); computeAll(); });
+            stopLossInput.addEventListener('input', computeAll);
+            bufferSelect.addEventListener('change', computeAll);
+            tradeType.addEventListener('change', computeAll);
+            depositInput.addEventListener('input', computeAll);
+            riskPercentInput.addEventListener('input', computeAll);
+            leverageInput.addEventListener('input', computeAll);
+        }
+        
+        updateTVHs();
+        bindEvents();
+        computeAll();
+    })();
+</script>
+</body>
+</html>
